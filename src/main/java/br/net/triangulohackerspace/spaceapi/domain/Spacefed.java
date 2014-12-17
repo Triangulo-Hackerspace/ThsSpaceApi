@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Spacefed extends AbstractDomain implements Serializable {
@@ -13,19 +12,16 @@ public class Spacefed extends AbstractDomain implements Serializable {
 	private static final long serialVersionUID = 2174101510699610775L;
 
 	@NotNull
-	@Size(max = 64)
 	@Column(name = "spacenet", nullable = false)
-	private String spacenet;
+	private Boolean spacenet;
 
 	@NotNull
-	@Size(max = 64)
 	@Column(name = "spacesaml", nullable = false)
-	private String spacesaml;
+	private Boolean spacesaml;
 
 	@NotNull
-	@Size(max = 64)
 	@Column(name = "spacephone", nullable = false)
-	private String spacephone;
+	private Boolean spacephone;
 
 	public Spacefed() {
 		super();
@@ -35,35 +31,35 @@ public class Spacefed extends AbstractDomain implements Serializable {
 		super(id);
 	}
 
-	public Spacefed(Long id, String spacenet, String spacesaml,
-			String spacephone) {
+	public Spacefed(Long id, Boolean spacenet, Boolean spacesaml,
+			Boolean spacephone) {
 		super(id);
 		this.spacenet = spacenet;
 		this.spacesaml = spacesaml;
 		this.spacephone = spacephone;
 	}
 
-	public String getSpacenet() {
+	public Boolean getSpacenet() {
 		return spacenet;
 	}
 
-	public void setSpacenet(String spacenet) {
+	public void setSpacenet(Boolean spacenet) {
 		this.spacenet = spacenet;
 	}
 
-	public String getSpacesaml() {
+	public Boolean getSpacesaml() {
 		return spacesaml;
 	}
 
-	public void setSpacesaml(String spacesaml) {
+	public void setSpacesaml(Boolean spacesaml) {
 		this.spacesaml = spacesaml;
 	}
 
-	public String getSpacephone() {
+	public Boolean getSpacephone() {
 		return spacephone;
 	}
 
-	public void setSpacephone(String spacephone) {
+	public void setSpacephone(Boolean spacephone) {
 		this.spacephone = spacephone;
 	}
 

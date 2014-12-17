@@ -13,29 +13,53 @@ public class Temperature extends AbstractDomain implements Serializable {
 	private static final long serialVersionUID = -9084396676085892892L;
 
 	@NotNull
-	@Size(max = 64)
+	@Size(max = 24)
 	@Column(name = "issue_mail", nullable = false)
-	private String issueMail;
+	private String value;
+
+	@NotNull
+	@Size(max = 24)
+	@Column(name = "unit", nullable = false)
+	private String unit; // "Roof"
+
+	@NotNull
+	@Size(max = 24)
+	@Column(name = "location", nullable = false)
+	private String location; // "°C"
 
 	public Temperature() {
 		super();
 	}
 
-	public Temperature(Long id) {
+	public Temperature(Long id, String value, String unit, String location) {
 		super(id);
+		this.value = value;
+		this.unit = unit;
+		this.location = location;
 	}
 
-	public Temperature(Long id, String issueMail) {
-		super(id);
-		this.issueMail = issueMail;
+	public String getValue() {
+		return value;
 	}
 
-	public String getIssueMail() {
-		return issueMail;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
-	public void setIssueMail(String issueMail) {
-		this.issueMail = issueMail;
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	@Override
@@ -43,7 +67,9 @@ public class Temperature extends AbstractDomain implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((issueMail == null) ? 0 : issueMail.hashCode());
+				+ ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 
@@ -56,17 +82,28 @@ public class Temperature extends AbstractDomain implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Temperature other = (Temperature) obj;
-		if (issueMail == null) {
-			if (other.issueMail != null)
+		if (location == null) {
+			if (other.location != null)
 				return false;
-		} else if (!issueMail.equals(other.issueMail))
+		} else if (!location.equals(other.location))
+			return false;
+		if (unit == null) {
+			if (other.unit != null)
+				return false;
+		} else if (!unit.equals(other.unit))
+			return false;
+		if (value == null) {
+			if (other.value != null)
+				return false;
+		} else if (!value.equals(other.value))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Temperature [issueMail=" + issueMail + "]";
+		return "Temperature [value=" + value + ", unit=" + unit + ", location="
+				+ location + "]";
 	}
 
 }

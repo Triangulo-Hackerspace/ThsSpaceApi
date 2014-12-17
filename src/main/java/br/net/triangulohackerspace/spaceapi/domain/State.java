@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 public class State extends AbstractDomain implements Serializable {
@@ -13,9 +12,8 @@ public class State extends AbstractDomain implements Serializable {
 	private static final long serialVersionUID = 5470957854048224005L;
 
 	@NotNull
-	@Size(max = 64)
 	@Column(name = "open", nullable = false)
-	private String open;
+	private Boolean open;
 
 	public State() {
 		super();
@@ -25,16 +23,16 @@ public class State extends AbstractDomain implements Serializable {
 		super(id);
 	}
 
-	public State(Long id, String open) {
+	public State(Long id, Boolean open) {
 		super(id);
 		this.open = open;
 	}
 
-	public String getOpen() {
+	public Boolean getOpen() {
 		return open;
 	}
 
-	public void setOpen(String open) {
+	public void setOpen(Boolean open) {
 		this.open = open;
 	}
 

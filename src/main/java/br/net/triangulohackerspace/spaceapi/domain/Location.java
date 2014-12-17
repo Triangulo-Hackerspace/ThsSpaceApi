@@ -18,9 +18,12 @@ public class Location extends AbstractDomain implements Serializable {
 	private String address;
 
 	@NotNull
-	@Size(max = 64)
-	@Column(name = "lon", nullable = false)
-	private String lat;
+	@Column(name = "lat", nullable = false)
+	private Double lat;
+
+	@NotNull
+	@Column(name = "log", nullable = false)
+	private Double log;
 
 	public Location() {
 		super();
@@ -30,10 +33,11 @@ public class Location extends AbstractDomain implements Serializable {
 		super(id);
 	}
 
-	public Location(Long id, String address, String lat) {
+	public Location(Long id, String address, Double lat, Double log) {
 		super(id);
 		this.address = address;
 		this.lat = lat;
+		this.log = log;
 	}
 
 	public String getAddress() {
@@ -44,12 +48,20 @@ public class Location extends AbstractDomain implements Serializable {
 		this.address = address;
 	}
 
-	public String getLat() {
+	public Double getLat() {
 		return lat;
 	}
 
-	public void setLat(String lat) {
+	public void setLat(Double lat) {
 		this.lat = lat;
+	}
+
+	public Double getLog() {
+		return log;
+	}
+
+	public void setLog(Double log) {
+		this.log = log;
 	}
 
 	@Override
@@ -58,6 +70,7 @@ public class Location extends AbstractDomain implements Serializable {
 		int result = 1;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((lat == null) ? 0 : lat.hashCode());
+		result = prime * result + ((log == null) ? 0 : log.hashCode());
 		return result;
 	}
 
@@ -80,12 +93,18 @@ public class Location extends AbstractDomain implements Serializable {
 				return false;
 		} else if (!lat.equals(other.lat))
 			return false;
+		if (log == null) {
+			if (other.log != null)
+				return false;
+		} else if (!log.equals(other.log))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Location [address=" + address + ", lat=" + lat + "]";
+		return "Location [address=" + address + ", lat=" + lat + ", log=" + log
+				+ "]";
 	}
 
 }
