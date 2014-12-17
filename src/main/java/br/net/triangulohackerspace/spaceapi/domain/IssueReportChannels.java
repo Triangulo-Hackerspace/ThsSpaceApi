@@ -1,11 +1,18 @@
 package br.net.triangulohackerspace.spaceapi.domain;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 public class IssueReportChannels extends AbstractDomain implements Serializable {
@@ -16,6 +23,10 @@ public class IssueReportChannels extends AbstractDomain implements Serializable 
 	@Size(max = 64)
 	@Column(name = "issue_mail", nullable = false)
 	private String issueMail;
+	
+	@OneToMany(mappedBy = "issueReportChannels", cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Space> spaces = new LinkedList<Space>();
 
 	public IssueReportChannels() {
 		super();

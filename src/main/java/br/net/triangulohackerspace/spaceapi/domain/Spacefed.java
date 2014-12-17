@@ -1,10 +1,17 @@
 package br.net.triangulohackerspace.spaceapi.domain;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 public class Spacefed extends AbstractDomain implements Serializable {
@@ -22,6 +29,10 @@ public class Spacefed extends AbstractDomain implements Serializable {
 	@NotNull
 	@Column(name = "spacephone", nullable = false)
 	private Boolean spacephone;
+	
+	@OneToMany(mappedBy = "spacefed", cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Space> spaces = new LinkedList<Space>();
 
 	public Spacefed() {
 		super();

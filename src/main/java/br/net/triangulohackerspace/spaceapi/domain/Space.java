@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -22,8 +21,8 @@ public class Space extends AbstractDomain implements Serializable {
 
 	@NotNull
 	@Size(max = 64)
-	@Column(name = "name", nullable = false)
-	private String name;
+	@Column(name = "space", nullable = false)
+	private String space;
 
 	@NotNull
 	@Size(max = 64)
@@ -34,36 +33,36 @@ public class Space extends AbstractDomain implements Serializable {
 	@Size(max = 64)
 	@Column(name = "url", nullable = false)
 	private String url;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne
 	@JoinColumn(name = "location_id")
 	private Location location;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne
 	@JoinColumn(name = "spacefed_id")
 	private Spacefed spacefed;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne
 	@JoinColumn(name = "contact_id")
 	private Contact contact;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne
 	@JoinColumn(name = "issue_report_channels_id")
 	private IssueReportChannels issueReportChannels;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne
 	@JoinColumn(name = "state_id")
 	private State state;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne
 	@JoinColumn(name = "project_id")
 	private Project project;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne
 	@JoinColumn(name = "cache_id")
 	private Cache cache;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne
 	@JoinColumn(name = "sensor_id")
 	private Sensor sensor;
 
@@ -75,14 +74,14 @@ public class Space extends AbstractDomain implements Serializable {
 		super(id);
 	}
 
-	public Space(Long id, String apiVersion, String name, String logo,
+	public Space(Long id, String apiVersion, String space, String logo,
 			String url, Location location, Spacefed spacefed, Contact contact,
 			IssueReportChannels issueReportChannels, State state,
 			Project project, Cache cache, Sensor sensor) { // [TODO] passar para
 															// build
 		super(id);
 		this.apiVersion = apiVersion;
-		this.name = name;
+		this.space = space;
 		this.logo = logo;
 		this.url = url;
 		this.location = location;
@@ -103,12 +102,12 @@ public class Space extends AbstractDomain implements Serializable {
 		this.apiVersion = apiVersion;
 	}
 
-	public String getName() {
-		return name;
+	public String getSpace() {
+		return space;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setSpace(String space) {
+		this.space = space;
 	}
 
 	public String getLogo() {
@@ -127,6 +126,70 @@ public class Space extends AbstractDomain implements Serializable {
 		this.url = url;
 	}
 
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public Spacefed getSpacefed() {
+		return spacefed;
+	}
+
+	public void setSpacefed(Spacefed spacefed) {
+		this.spacefed = spacefed;
+	}
+
+	public Contact getContact() {
+		return contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
+
+	public IssueReportChannels getIssueReportChannels() {
+		return issueReportChannels;
+	}
+
+	public void setIssueReportChannels(IssueReportChannels issueReportChannels) {
+		this.issueReportChannels = issueReportChannels;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public Cache getCache() {
+		return cache;
+	}
+
+	public void setCache(Cache cache) {
+		this.cache = cache;
+	}
+
+	public Sensor getSensor() {
+		return sensor;
+	}
+
+	public void setSensor(Sensor sensor) {
+		this.sensor = sensor;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -142,7 +205,7 @@ public class Space extends AbstractDomain implements Serializable {
 		result = prime * result
 				+ ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((logo == null) ? 0 : logo.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((space == null) ? 0 : space.hashCode());
 		result = prime * result + ((project == null) ? 0 : project.hashCode());
 		result = prime * result + ((sensor == null) ? 0 : sensor.hashCode());
 		result = prime * result
@@ -191,10 +254,10 @@ public class Space extends AbstractDomain implements Serializable {
 				return false;
 		} else if (!logo.equals(other.logo))
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (space == null) {
+			if (other.space != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!space.equals(other.space))
 			return false;
 		if (project == null) {
 			if (other.project != null)
@@ -227,7 +290,7 @@ public class Space extends AbstractDomain implements Serializable {
 	@Override
 	public String toString() {
 		return "Space [id=" + super.getId() + ", apiVersion=" + apiVersion
-				+ ", name=" + name + ", logo=" + logo + ", url=" + url + "]";
+				+ ", space=" + space + ", logo=" + logo + ", url=" + url + "]";
 	}
 
 }

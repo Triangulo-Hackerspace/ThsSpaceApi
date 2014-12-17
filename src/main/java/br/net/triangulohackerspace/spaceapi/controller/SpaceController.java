@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +41,12 @@ public class SpaceController {
         return spaceService.getList();
     }
 
+    @RequestMapping(value = "/space/api/{spaceId}", method = RequestMethod.GET)
+    public Space spaces(@PathVariable("spaceId") Long spaceId) {
+		LOGGER.debug("Received request to list all spaces");
+        return spaceService.findSpace(spaceId);
+    }
+    
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleSpaceAlreadyExistsException(AlreadyExistsException e) {

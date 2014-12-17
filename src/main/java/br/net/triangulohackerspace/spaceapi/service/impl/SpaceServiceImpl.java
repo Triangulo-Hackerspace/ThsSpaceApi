@@ -48,4 +48,10 @@ public class SpaceServiceImpl implements SpaceService {
         return repository.findAll();
     }
 
+	@Override
+	@Transactional(readOnly = false)
+	public Space findSpace(Long id) {
+		return repository.findOne(id);
+	}
+
 }

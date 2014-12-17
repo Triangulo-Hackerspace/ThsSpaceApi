@@ -1,11 +1,18 @@
 package br.net.triangulohackerspace.spaceapi.domain;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 public class Project extends AbstractDomain implements Serializable {
@@ -21,6 +28,10 @@ public class Project extends AbstractDomain implements Serializable {
 	@Size(max = 64)
 	@Column(name = "git", nullable = false)
 	private String git;
+	
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Space> spaces = new LinkedList<Space>();
 
 	public Project() {
 		super();

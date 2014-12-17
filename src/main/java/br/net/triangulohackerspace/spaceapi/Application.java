@@ -92,16 +92,23 @@ public class Application extends SpringBootServletInitializer {
 		
 		Temperature temperature1 = new Temperature();
 		temperature1.setId(1l);
-		temperature1.setIssueMail("");
+		temperature1.setLocation("Roof");
+		temperature1.setUnit("°C");
+		temperature1.setValue("-");
 		temperatureRepository.save(temperature1);
 		
 		Temperature temperature2 = new Temperature();
-		temperature2.setId(1l);
-		temperature2.setIssueMail("");
-		temperatureRepository.save(temperature1);
+		temperature2.setId(2l);
+		temperature2.setLocation("Lab");
+		temperature2.setUnit("°De");
+		temperature2.setValue("-");
+		temperatureRepository.save(temperature2);
 		
-		Sensor sensor = new Sensor(1l, "t1", temperature1);
-		sensorRepository.save(sensor);
+		Sensor sensor1 = new Sensor(1l, "t1", temperature1);
+		sensorRepository.save(sensor1);
+		
+		Sensor sensor2 = new Sensor(2l, "t2", temperature2);
+		sensorRepository.save(sensor2);
 				
 		Spacefed spacefed = new Spacefed(1l, false, false, false);
 		spacefedRepository.save(spacefed);
@@ -109,7 +116,16 @@ public class Application extends SpringBootServletInitializer {
 		State state = new State(1l, false);
 		stateRepository.save(state);
 		
-		Space space = new Space(1l, "0.13", "The space name", "http://your-space.com/logo.png", "http://example.com", location, spacefed, contact, issueReportChannels, state, project, cache, sensor);
+		Location locationResult = locationRepository.findOne(1l);
+		Spacefed spacefedResult = spacefedRepository.findOne(1l);
+		Contact contactResult = contactRepository.findOne(1l);
+		IssueReportChannels issueReportChannelsResult = issueReportChannelsRepository.findOne(1l);
+		State stateResult = stateRepository.findOne(1l);
+		Project projectResult = projectRepository.findOne(1l);
+		Cache cacheResult = cacheRepository.findOne(1l);
+		Sensor sensorResult = sensorRepository.findOne(1l);
+		
+		Space space = new Space(1l, "0.13", "The space name", "http://your-space.com/logo.png", "http://example.com", locationResult, spacefedResult, contactResult, issueReportChannelsResult, stateResult, projectResult, cacheResult, sensorResult);
 		spaceRepository.save(space);
 		
 		userRepository.save(new User(1l, "rogerio", "sena"));

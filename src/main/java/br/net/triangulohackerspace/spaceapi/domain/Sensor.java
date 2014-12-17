@@ -1,14 +1,22 @@
 package br.net.triangulohackerspace.spaceapi.domain;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Sensor extends AbstractDomain implements Serializable {
@@ -18,11 +26,16 @@ public class Sensor extends AbstractDomain implements Serializable {
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "sensor_name", nullable = false)
+	@JsonIgnore
 	private String name;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "temperature_id")
 	private Temperature temperature;
+	
+	@OneToMany(mappedBy = "sensor", cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Space> sensors = new LinkedList<Space>();
 
 	public Sensor() {
 		super();
