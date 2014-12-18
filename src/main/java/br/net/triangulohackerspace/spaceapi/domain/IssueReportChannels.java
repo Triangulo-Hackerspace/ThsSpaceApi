@@ -1,18 +1,15 @@
 package br.net.triangulohackerspace.spaceapi.domain;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class IssueReportChannels extends AbstractDomain implements Serializable {
@@ -23,10 +20,11 @@ public class IssueReportChannels extends AbstractDomain implements Serializable 
 	@Size(max = 64)
 	@Column(name = "issue_mail", nullable = false)
 	private String issueMail;
-	
-	@OneToMany(mappedBy = "issueReportChannels", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Space> spaces = new LinkedList<Space>();
+
+	@ManyToOne
+	@JoinColumn(name = "space_id")
+	@JsonIgnore
+	private Space space;
 
 	public IssueReportChannels() {
 		super();
@@ -36,9 +34,10 @@ public class IssueReportChannels extends AbstractDomain implements Serializable 
 		super(id);
 	}
 
-	public IssueReportChannels(Long id, String issueMail) {
+	public IssueReportChannels(Long id, String issueMail, Space space) {
 		super(id);
 		this.issueMail = issueMail;
+		this.space = space;
 	}
 
 	public String getIssueMail() {
@@ -49,12 +48,21 @@ public class IssueReportChannels extends AbstractDomain implements Serializable 
 		this.issueMail = issueMail;
 	}
 
+	public Space getSpace() {
+		return space;
+	}
+
+	public void setSpace(Space space) {
+		this.space = space;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
 				+ ((issueMail == null) ? 0 : issueMail.hashCode());
+		result = prime * result + ((space == null) ? 0 : space.hashCode());
 		return result;
 	}
 
@@ -72,11 +80,18 @@ public class IssueReportChannels extends AbstractDomain implements Serializable 
 				return false;
 		} else if (!issueMail.equals(other.issueMail))
 			return false;
+		if (space == null) {
+			if (other.space != null)
+				return false;
+		} else if (!space.equals(other.space))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "IssueReportChannels [issueMail=" + issueMail + "]";
+		return "IssueReportChannels [issueMail=" + issueMail + ", space="
+				+ space + "]";
 	}
+
 }

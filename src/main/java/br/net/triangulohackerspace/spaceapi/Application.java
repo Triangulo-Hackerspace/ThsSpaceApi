@@ -69,65 +69,58 @@ public class Application extends SpringBootServletInitializer {
 		StateRepository stateRepository = context
 				.getBean(StateRepository.class);
 
-
 		TemperatureRepository temperatureRepository = context
 				.getBean(TemperatureRepository.class);
 
 		UserRepository userRepository = context.getBean(UserRepository.class);
+
+		Space space = new Space(1l, "0.13", "The space name",
+				"http://your-space.com/logo.png", "http://example.com");
+		spaceRepository.save(space);
 		
-		Cache cache = new Cache(1l, "m.02");
+		Cache cache = new Cache(1l, "m.02", space);
 		cacheRepository.save(cache);
-		
-		Contact contact = new Contact(1l, "e@xample.com", "@example", "irc://irc.freenode.net/example", "public@lists.example.com", "ZUB4YW1wbGUuY29tCg==");
+
+		Contact contact = new Contact(1l, "e@xample.com", "@example",
+				"irc://irc.freenode.net/example", "public@lists.example.com",
+				"ZUB4YW1wbGUuY29tCg==", space);
 		contactRepository.save(contact);
-		
-		IssueReportChannels issueReportChannels = new IssueReportChannels(1l, "issue_mail");
+
+		IssueReportChannels issueReportChannels = new IssueReportChannels(1l,
+				"issue_mail", space);
 		issueReportChannelsRepository.save(issueReportChannels);
-		
-		Location location = new Location(1l, "see the documentation", 39.240431, 5.973817);
+
+		Location location = new Location(1l, "see the documentation",
+				39.240431, 5.973817, space);
 		locationRepository.save(location);
-		
-		Project project = new Project(1l, "example", "http://github.com/example");
+
+		Project project = new Project(1l, "example",
+				"http://github.com/example", space);
 		projectRepository.save(project);
-		
+
+		Sensor sensor = new Sensor(1l, "t1", space);
+		sensorRepository.save(sensor);
+
 		Temperature temperature1 = new Temperature();
 		temperature1.setId(1l);
 		temperature1.setLocation("Roof");
 		temperature1.setUnit("°C");
 		temperature1.setValue("-");
 		temperatureRepository.save(temperature1);
-		
+
 		Temperature temperature2 = new Temperature();
 		temperature2.setId(2l);
 		temperature2.setLocation("Lab");
 		temperature2.setUnit("°De");
 		temperature2.setValue("-");
 		temperatureRepository.save(temperature2);
-		
-		Sensor sensor1 = new Sensor(1l, "t1", temperature1);
-		sensorRepository.save(sensor1);
-		
-		Sensor sensor2 = new Sensor(2l, "t2", temperature2);
-		sensorRepository.save(sensor2);
-				
-		Spacefed spacefed = new Spacefed(1l, false, false, false);
+
+		Spacefed spacefed = new Spacefed(1l, false, false, false, space);
 		spacefedRepository.save(spacefed);
-		
-		State state = new State(1l, false);
+
+		State state = new State(1l, false, space);
 		stateRepository.save(state);
-		
-		Location locationResult = locationRepository.findOne(1l);
-		Spacefed spacefedResult = spacefedRepository.findOne(1l);
-		Contact contactResult = contactRepository.findOne(1l);
-		IssueReportChannels issueReportChannelsResult = issueReportChannelsRepository.findOne(1l);
-		State stateResult = stateRepository.findOne(1l);
-		Project projectResult = projectRepository.findOne(1l);
-		Cache cacheResult = cacheRepository.findOne(1l);
-		Sensor sensorResult = sensorRepository.findOne(1l);
-		
-		Space space = new Space(1l, "0.13", "The space name", "http://your-space.com/logo.png", "http://example.com", locationResult, spacefedResult, contactResult, issueReportChannelsResult, stateResult, projectResult, cacheResult, sensorResult);
-		spaceRepository.save(space);
-		
+
 		userRepository.save(new User(1l, "rogerio", "sena"));
 	}
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.net.triangulohackerspace.spaceapi.domain.Space;
+import br.net.triangulohackerspace.spaceapi.domain.to.SpaceApiTO;
 import br.net.triangulohackerspace.spaceapi.service.SpaceService;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
@@ -42,7 +43,7 @@ public class SpaceController {
     }
 
     @RequestMapping(value = "/space/api/{spaceId}", method = RequestMethod.GET)
-    public Space spaces(@PathVariable("spaceId") Long spaceId) {
+    public SpaceApiTO spaces(@PathVariable("spaceId") Long spaceId) {
 		LOGGER.debug("Received request to list all spaces");
         return spaceService.findSpace(spaceId);
     }

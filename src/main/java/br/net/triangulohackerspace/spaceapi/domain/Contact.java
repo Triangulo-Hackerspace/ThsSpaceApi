@@ -1,18 +1,15 @@
 package br.net.triangulohackerspace.spaceapi.domain;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Contact extends AbstractDomain implements Serializable {
@@ -43,10 +40,11 @@ public class Contact extends AbstractDomain implements Serializable {
 	@Size(max = 64)
 	@Column(name = "issue_mail", nullable = false)
 	private String issueMail;
-	
-	@OneToMany(mappedBy = "contact", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Space> spaces = new LinkedList<Space>();
+
+	@ManyToOne
+	@JoinColumn(name = "space_id")
+	@JsonIgnore
+	private Space space;
 
 	public Contact() {
 		super();
@@ -56,14 +54,16 @@ public class Contact extends AbstractDomain implements Serializable {
 		super(id);
 	}
 
-	public Contact(Long id, String email, String twitter, String irc,
-			String ml, String issueMail) { // [TODO] Criar Build
+	// [TODO] Criar Build
+	public Contact(Long id, String email, String twitter, String irc, String ml,
+			String issueMail, Space space) {
 		super(id);
 		this.email = email;
 		this.twitter = twitter;
 		this.irc = irc;
 		this.ml = ml;
 		this.issueMail = issueMail;
+		this.space = space;
 	}
 
 	public String getEmail() {
@@ -106,6 +106,14 @@ public class Contact extends AbstractDomain implements Serializable {
 		this.issueMail = issueMail;
 	}
 
+	public Space getSpace() {
+		return space;
+	}
+
+	public void setSpace(Space space) {
+		this.space = space;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -115,6 +123,7 @@ public class Contact extends AbstractDomain implements Serializable {
 		result = prime * result
 				+ ((issueMail == null) ? 0 : issueMail.hashCode());
 		result = prime * result + ((ml == null) ? 0 : ml.hashCode());
+		result = prime * result + ((space == null) ? 0 : space.hashCode());
 		result = prime * result + ((twitter == null) ? 0 : twitter.hashCode());
 		return result;
 	}
@@ -148,6 +157,11 @@ public class Contact extends AbstractDomain implements Serializable {
 				return false;
 		} else if (!ml.equals(other.ml))
 			return false;
+		if (space == null) {
+			if (other.space != null)
+				return false;
+		} else if (!space.equals(other.space))
+			return false;
 		if (twitter == null) {
 			if (other.twitter != null)
 				return false;
@@ -159,7 +173,8 @@ public class Contact extends AbstractDomain implements Serializable {
 	@Override
 	public String toString() {
 		return "Contact [email=" + email + ", twitter=" + twitter + ", irc="
-				+ irc + ", ml=" + ml + ", issueMail=" + issueMail + "]";
+				+ irc + ", ml=" + ml + ", issueMail=" + issueMail + ", space="
+				+ space + "]";
 	}
 
 }

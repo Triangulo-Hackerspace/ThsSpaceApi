@@ -1,20 +1,13 @@
 package br.net.triangulohackerspace.spaceapi.domain;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,53 +23,69 @@ public class Sensor extends AbstractDomain implements Serializable {
 	private String name;
 
 	@ManyToOne
-	@JoinColumn(name = "temperature_id")
-	private Temperature temperature;
-	
-	@OneToMany(mappedBy = "sensor", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Space> sensors = new LinkedList<Space>();
+	@JoinColumn(name = "space_id")
+	@JsonIgnore
+	private Space space;
 
 	public Sensor() {
 		super();
 	}
 
-	public Sensor(Long id) {
-		super(id);
-	}
-
-	public Sensor(Long id, String name, Temperature temperature) {
+	public Sensor(Long id, String name, Space space) {
 		super(id);
 		this.name = name;
-		this.temperature = temperature;
+		this.space = space;
 	}
 
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name
+	 *            the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public Temperature getTemperature() {
-		return temperature;
+	/**
+	 * @return the space
+	 */
+	public Space getSpace() {
+		return space;
 	}
 
-	public void setTemperature(Temperature temperature) {
-		this.temperature = temperature;
+	/**
+	 * @param space
+	 *            the space to set
+	 */
+	public void setSpace(Space space) {
+		this.space = space;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((temperature == null) ? 0 : temperature.hashCode());
+		result = prime * result + ((space == null) ? 0 : space.hashCode());
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -91,17 +100,22 @@ public class Sensor extends AbstractDomain implements Serializable {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (temperature == null) {
-			if (other.temperature != null)
+		if (space == null) {
+			if (other.space != null)
 				return false;
-		} else if (!temperature.equals(other.temperature))
+		} else if (!space.equals(other.space))
 			return false;
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "Sensor [name=" + name + ", temperature=" + temperature + "]";
+		return "Sensor [name=" + name + ", space=" + space + "]";
 	}
 
 }

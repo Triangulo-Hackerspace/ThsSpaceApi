@@ -1,17 +1,14 @@
 package br.net.triangulohackerspace.spaceapi.domain;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class State extends AbstractDomain implements Serializable {
@@ -22,10 +19,11 @@ public class State extends AbstractDomain implements Serializable {
 	@Column(name = "open", nullable = false)
 	private Boolean open;
 
-	@OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Space> spaces = new LinkedList<Space>();
-	
+	@ManyToOne
+	@JoinColumn(name = "space_id")
+	@JsonIgnore
+	private Space space;
+
 	public State() {
 		super();
 	}
@@ -34,27 +32,65 @@ public class State extends AbstractDomain implements Serializable {
 		super(id);
 	}
 
-	public State(Long id, Boolean open) {
+	/**
+	 * @param open
+	 * @param space
+	 */
+	public State(Long id, Boolean open, Space space) {
 		super(id);
 		this.open = open;
+		this.space = space;
 	}
 
+	/**
+	 * @return the open
+	 */
 	public Boolean getOpen() {
 		return open;
 	}
 
+	/**
+	 * @param open
+	 *            the open to set
+	 */
 	public void setOpen(Boolean open) {
 		this.open = open;
 	}
 
+	/**
+	 * @return the space
+	 */
+	public Space getSpace() {
+		return space;
+	}
+
+	/**
+	 * @param space
+	 *            the space to set
+	 */
+	public void setSpace(Space space) {
+		this.space = space;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((open == null) ? 0 : open.hashCode());
+		result = prime * result + ((space == null) ? 0 : space.hashCode());
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -69,12 +105,22 @@ public class State extends AbstractDomain implements Serializable {
 				return false;
 		} else if (!open.equals(other.open))
 			return false;
+		if (space == null) {
+			if (other.space != null)
+				return false;
+		} else if (!space.equals(other.space))
+			return false;
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "State [open=" + open + "]";
+		return "State [open=" + open + ", space=" + space + "]";
 	}
 
 }

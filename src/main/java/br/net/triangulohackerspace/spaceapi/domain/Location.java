@@ -1,18 +1,15 @@
 package br.net.triangulohackerspace.spaceapi.domain;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Location extends AbstractDomain implements Serializable {
@@ -31,10 +28,11 @@ public class Location extends AbstractDomain implements Serializable {
 	@NotNull
 	@Column(name = "log", nullable = false)
 	private Double log;
-	
-	@OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Space> spaces = new LinkedList<Space>();
+
+	@ManyToOne
+	@JoinColumn(name = "space_id")
+	@JsonIgnore
+	private Space space;
 
 	public Location() {
 		super();
@@ -44,37 +42,79 @@ public class Location extends AbstractDomain implements Serializable {
 		super(id);
 	}
 
-	public Location(Long id, String address, Double lat, Double log) {
+	public Location(Long id, String address, Double lat, Double log, Space space) {
 		super(id);
 		this.address = address;
 		this.lat = lat;
 		this.log = log;
+		this.space = space;
 	}
 
+	/**
+	 * @return the address
+	 */
 	public String getAddress() {
 		return address;
 	}
 
+	/**
+	 * @param address
+	 *            the address to set
+	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
+	/**
+	 * @return the lat
+	 */
 	public Double getLat() {
 		return lat;
 	}
 
+	/**
+	 * @param lat
+	 *            the lat to set
+	 */
 	public void setLat(Double lat) {
 		this.lat = lat;
 	}
 
+	/**
+	 * @return the log
+	 */
 	public Double getLog() {
 		return log;
 	}
 
+	/**
+	 * @param log
+	 *            the log to set
+	 */
 	public void setLog(Double log) {
 		this.log = log;
 	}
 
+	/**
+	 * @return the space
+	 */
+	public Space getSpace() {
+		return space;
+	}
+
+	/**
+	 * @param space
+	 *            the space to set
+	 */
+	public void setSpace(Space space) {
+		this.space = space;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -82,9 +122,15 @@ public class Location extends AbstractDomain implements Serializable {
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((lat == null) ? 0 : lat.hashCode());
 		result = prime * result + ((log == null) ? 0 : log.hashCode());
+		result = prime * result + ((space == null) ? 0 : space.hashCode());
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -109,13 +155,23 @@ public class Location extends AbstractDomain implements Serializable {
 				return false;
 		} else if (!log.equals(other.log))
 			return false;
+		if (space == null) {
+			if (other.space != null)
+				return false;
+		} else if (!space.equals(other.space))
+			return false;
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "Location [address=" + address + ", lat=" + lat + ", log=" + log
-				+ "]";
+				+ ", space=" + space + "]";
 	}
 
 }
