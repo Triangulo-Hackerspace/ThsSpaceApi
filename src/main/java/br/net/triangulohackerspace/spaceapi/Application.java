@@ -106,6 +106,7 @@ public class Application extends SpringBootServletInitializer {
 		temperature1.setLocation("Roof");
 		temperature1.setUnit("°C");
 		temperature1.setValue("-");
+		temperature1.setSensor(sensor);
 		temperatureRepository.save(temperature1);
 
 		Temperature temperature2 = new Temperature();
@@ -113,6 +114,7 @@ public class Application extends SpringBootServletInitializer {
 		temperature2.setLocation("Lab");
 		temperature2.setUnit("°De");
 		temperature2.setValue("-");
+		temperature2.setSensor(sensor);
 		temperatureRepository.save(temperature2);
 
 		Spacefed spacefed = new Spacefed(1l, false, false, false, space);

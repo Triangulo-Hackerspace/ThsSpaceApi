@@ -21,6 +21,8 @@ import br.net.triangulohackerspace.spaceapi.domain.Sensor;
 import br.net.triangulohackerspace.spaceapi.domain.Space;
 import br.net.triangulohackerspace.spaceapi.domain.Spacefed;
 import br.net.triangulohackerspace.spaceapi.domain.State;
+import br.net.triangulohackerspace.spaceapi.domain.Temperature;
+import br.net.triangulohackerspace.spaceapi.domain.to.SensorTO;
 import br.net.triangulohackerspace.spaceapi.domain.to.SpaceApiTO;
 import br.net.triangulohackerspace.spaceapi.repository.CacheRepository;
 import br.net.triangulohackerspace.spaceapi.repository.ContactRepository;
@@ -31,6 +33,7 @@ import br.net.triangulohackerspace.spaceapi.repository.SensorRepository;
 import br.net.triangulohackerspace.spaceapi.repository.SpaceRepository;
 import br.net.triangulohackerspace.spaceapi.repository.SpacefedRepository;
 import br.net.triangulohackerspace.spaceapi.repository.StateRepository;
+import br.net.triangulohackerspace.spaceapi.repository.TemperatureRepository;
 import br.net.triangulohackerspace.spaceapi.service.SpaceService;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
@@ -65,7 +68,10 @@ public class SpaceServiceImpl implements SpaceService {
     private CacheRepository cacheRepository;
   
     @Inject
-    private SensorRepository  sensorRepository;
+    private SensorRepository sensorRepository;
+    
+    @Inject
+    private TemperatureRepository temperatureRepository;
     
   /*  public SpaceServiceImpl(final SpaceRepository repository) {
         this.repository = repository;
@@ -113,6 +119,8 @@ public class SpaceServiceImpl implements SpaceService {
 		
 		Sensor sensor = sensorRepository.findBySpaces(space.getId());
 		
+		List<Temperature> temperatures = temperatureRepository.findBySensors(sensor.getId());
+		
 		spaceApiTO.setApiVersion(space.getApiVersion());
 		spaceApiTO.setName(space.getName());
 		spaceApiTO.setLogo(space.getLogo());
@@ -132,7 +140,13 @@ public class SpaceServiceImpl implements SpaceService {
 		
 		spaceApiTO.setCache(cache);
 		
-		spaceApiTO.setSensor(sensor);
+		SensorTO sensorTO = new SensorTO();
+				
+		sensorTO.setSensor(sensor);
+		
+		sensorTO.setTemperatures(temperatures);
+		
+		spaceApiTO.setSensorTO(sensorTO);
 
 		return spaceApiTO;
 	}

@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Temperature extends AbstractDomain implements Serializable {
 
@@ -28,10 +30,12 @@ public class Temperature extends AbstractDomain implements Serializable {
 	@Column(name = "location", nullable = false)
 	private String location; // "°C"
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "space_id")
 	private Space space;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "sensor_id")
 	private Sensor sensor;
