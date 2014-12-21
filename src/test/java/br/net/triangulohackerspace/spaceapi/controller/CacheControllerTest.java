@@ -9,15 +9,12 @@ import static org.mockito.Mockito.when;
 
 import java.util.Collection;
 
-import javax.inject.Inject;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.net.triangulohackerspace.spaceapi.controller.CacheController;
 import br.net.triangulohackerspace.spaceapi.domain.Cache;
 import br.net.triangulohackerspace.spaceapi.service.CacheService;
 import br.net.triangulohackerspace.spaceapi.util.CacheUtil;
@@ -28,11 +25,11 @@ public class CacheControllerTest {
     @Mock
     private CacheService cacheService;
 
-    @Inject
     private CacheController cacheController;
 
     @Before
     public void setUp() throws Exception {
+    	cacheController = new CacheController(cacheService);
     }
 
     @Test

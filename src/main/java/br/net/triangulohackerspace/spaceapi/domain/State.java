@@ -8,10 +8,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class State extends AbstractDomain implements Serializable {
+@JsonIgnoreProperties("new")
+public class State extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 5470957854048224005L;
 
@@ -21,76 +25,88 @@ public class State extends AbstractDomain implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "space_id")
-	@JsonIgnore
 	private Space space;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	private String date;
+
+	private String stateStatus;
 
 	public State() {
 		super();
 	}
 
-	public State(Long id) {
-		super(id);
-	}
-
-	/**
-	 * @param open
-	 * @param space
-	 */
-	public State(Long id, Boolean open, Space space) {
-		super(id);
+	public State(Boolean open, Space space, User user, String date,
+			String stateStatus) {
 		this.open = open;
 		this.space = space;
+		this.user = user;
+		this.date = date;
+		this.stateStatus = stateStatus;
 	}
 
-	/**
-	 * @return the open
-	 */
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return super.getId();
+	}
+	
 	public Boolean getOpen() {
 		return open;
 	}
 
-	/**
-	 * @param open
-	 *            the open to set
-	 */
 	public void setOpen(Boolean open) {
 		this.open = open;
 	}
 
-	/**
-	 * @return the space
-	 */
 	public Space getSpace() {
 		return space;
 	}
 
-	/**
-	 * @param space
-	 *            the space to set
-	 */
 	public void setSpace(Space space) {
 		this.space = space;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getStateStatus() {
+		return stateStatus;
+	}
+
+	public void setStateStatus(String stateStatus) {
+		this.stateStatus = stateStatus;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((open == null) ? 0 : open.hashCode());
 		result = prime * result + ((space == null) ? 0 : space.hashCode());
+		result = prime * result
+				+ ((stateStatus == null) ? 0 : stateStatus.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -100,6 +116,11 @@ public class State extends AbstractDomain implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		State other = (State) obj;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
 		if (open == null) {
 			if (other.open != null)
 				return false;
@@ -110,17 +131,23 @@ public class State extends AbstractDomain implements Serializable {
 				return false;
 		} else if (!space.equals(other.space))
 			return false;
+		if (stateStatus == null) {
+			if (other.stateStatus != null)
+				return false;
+		} else if (!stateStatus.equals(other.stateStatus))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "State [open=" + open + ", space=" + space + "]";
+		return "State [open=" + open + ", space=" + space + ", user=" + user
+				+ ", date=" + date + ", stateStatus=" + stateStatus + "]";
 	}
 
 }

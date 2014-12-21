@@ -17,7 +17,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.net.triangulohackerspace.spaceapi.controller.ProjectController;
 import br.net.triangulohackerspace.spaceapi.domain.Project;
 import br.net.triangulohackerspace.spaceapi.service.ProjectService;
 import br.net.triangulohackerspace.spaceapi.util.ProjectUtil;
@@ -33,6 +32,7 @@ public class ProjectControllerTest {
 
     @Before
     public void setUp() throws Exception {
+    	projectController = new ProjectController(projectService);
     }
 
     @Test

@@ -17,7 +17,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.net.triangulohackerspace.spaceapi.controller.LocationController;
 import br.net.triangulohackerspace.spaceapi.domain.Location;
 import br.net.triangulohackerspace.spaceapi.service.LocationService;
 import br.net.triangulohackerspace.spaceapi.util.LocationUtil;
@@ -33,6 +32,7 @@ public class LocationControllerTest {
 
     @Before
     public void setUp() throws Exception {
+    	locationController = new LocationController(locationService);
     }
 
     @Test

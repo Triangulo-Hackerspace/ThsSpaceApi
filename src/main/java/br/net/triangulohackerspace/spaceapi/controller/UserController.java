@@ -27,7 +27,12 @@ public class UserController {
     @Inject
     private UserService userService;
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @Inject
+	public UserController(final UserService userService) {
+		this.userService = userService;
+	}
+    
+	@RequestMapping(value = "/user", method = RequestMethod.POST)
     public User createUser(@RequestBody @Valid final User user) {
         LOGGER.debug("Received request to create the {}", user);
         return userService.save(user);

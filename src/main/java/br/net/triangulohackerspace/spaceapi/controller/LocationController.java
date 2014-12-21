@@ -26,6 +26,11 @@ public class LocationController {
     
     @Inject
     private LocationService locationService;
+    
+    @Inject
+	public LocationController(final LocationService locationService) {
+		this.locationService = locationService;
+	}
 
     @RequestMapping(value = "/location", method = RequestMethod.POST)
     public Location createLocation(@RequestBody @Valid final Location location) {

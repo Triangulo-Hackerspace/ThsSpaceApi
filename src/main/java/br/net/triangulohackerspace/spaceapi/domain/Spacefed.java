@@ -8,10 +8,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class Spacefed extends AbstractDomain implements Serializable {
+@JsonIgnoreProperties("new")
+public class Spacefed extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 2174101510699610775L;
 
@@ -36,23 +40,24 @@ public class Spacefed extends AbstractDomain implements Serializable {
 		super();
 	}
 
-	public Spacefed(Long id) {
-		super(id);
-	}
-
 	/**
 	 * @param spacenet
 	 * @param spacesaml
 	 * @param spacephone
 	 * @param space
 	 */
-	public Spacefed(Long id, Boolean spacenet, Boolean spacesaml, Boolean spacephone,
+	public Spacefed(Boolean spacenet, Boolean spacesaml, Boolean spacephone,
 			Space space) {
-		super(id);
 		this.spacenet = spacenet;
 		this.spacesaml = spacesaml;
 		this.spacephone = spacephone;
 		this.space = space;
+	}
+	
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return super.getId();
 	}
 
 	/**

@@ -17,7 +17,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.net.triangulohackerspace.spaceapi.controller.SpacefedController;
 import br.net.triangulohackerspace.spaceapi.domain.Spacefed;
 import br.net.triangulohackerspace.spaceapi.service.SpacefedService;
 import br.net.triangulohackerspace.spaceapi.util.SpacefedUtil;
@@ -33,6 +32,7 @@ public class SpacefedControllerTest {
 
     @Before
     public void setUp() throws Exception {
+    	spacefedController = new SpacefedController(spacefedService);
     }
 
     @Test

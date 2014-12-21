@@ -9,10 +9,14 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class Contact extends AbstractDomain implements Serializable {
+@JsonIgnoreProperties("new")
+public class Contact extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 2429027949871143439L;
 
@@ -50,14 +54,9 @@ public class Contact extends AbstractDomain implements Serializable {
 		super();
 	}
 
-	public Contact(Long id) {
-		super(id);
-	}
-
 	// [TODO] Criar Build
-	public Contact(Long id, String email, String twitter, String irc, String ml,
+	public Contact(String email, String twitter, String irc, String ml,
 			String issueMail, Space space) {
-		super(id);
 		this.email = email;
 		this.twitter = twitter;
 		this.irc = irc;
@@ -66,6 +65,12 @@ public class Contact extends AbstractDomain implements Serializable {
 		this.space = space;
 	}
 
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return super.getId();
+	}
+	
 	public String getEmail() {
 		return email;
 	}

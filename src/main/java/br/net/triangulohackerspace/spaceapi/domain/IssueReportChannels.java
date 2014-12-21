@@ -9,10 +9,14 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class IssueReportChannels extends AbstractDomain implements Serializable {
+@JsonIgnoreProperties("new")
+public class IssueReportChannels extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 4869919303001760198L;
 
@@ -30,14 +34,15 @@ public class IssueReportChannels extends AbstractDomain implements Serializable 
 		super();
 	}
 
-	public IssueReportChannels(Long id) {
-		super(id);
-	}
-
-	public IssueReportChannels(Long id, String issueMail, Space space) {
-		super(id);
+	public IssueReportChannels(String issueMail, Space space) {
 		this.issueMail = issueMail;
 		this.space = space;
+	}
+	
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return super.getId();
 	}
 
 	public String getIssueMail() {

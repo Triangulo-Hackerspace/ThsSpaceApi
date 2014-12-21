@@ -7,10 +7,15 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.Objects;
 
 @Entity
-public class User extends AbstractDomain implements Serializable {
+@JsonIgnoreProperties("new")
+public class User extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 127178790025556234L;
 
@@ -28,14 +33,15 @@ public class User extends AbstractDomain implements Serializable {
 		super();
 	}
 
-	public User(Long id) {
-		super(id);
-	}
-
-	public User(Long id, String username, String password) {
-		super(id);
+	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
+	}
+
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return super.getId();
 	}
 
 	public String getUsername() {

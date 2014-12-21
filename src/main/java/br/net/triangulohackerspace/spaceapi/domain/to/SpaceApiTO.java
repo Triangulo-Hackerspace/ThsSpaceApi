@@ -4,16 +4,16 @@ import br.net.triangulohackerspace.spaceapi.domain.Cache;
 import br.net.triangulohackerspace.spaceapi.domain.Contact;
 import br.net.triangulohackerspace.spaceapi.domain.IssueReportChannels;
 import br.net.triangulohackerspace.spaceapi.domain.Location;
-import br.net.triangulohackerspace.spaceapi.domain.Project;
 import br.net.triangulohackerspace.spaceapi.domain.Space;
 import br.net.triangulohackerspace.spaceapi.domain.Spacefed;
-import br.net.triangulohackerspace.spaceapi.domain.State;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder(value={"api", "space", "logo", "url", "location", "spacefed", "contact", "issueReportChannels", "state", "project", "cache", "sensor"})
+@JsonPropertyOrder(value = { "api", "space", "logo", "url", "location",
+		"spacefed", "contact", "issueReportChannels", "state", "project",
+		"cache", "sensor" })
 public class SpaceApiTO {
 
 	@JsonIgnore
@@ -27,13 +27,16 @@ public class SpaceApiTO {
 
 	private IssueReportChannels issueReportChannels;
 
-	private State state;
+	@JsonProperty(value = "state")
+	private StateTO stateTO;
 
-	private Project project;
+	@JsonProperty(value = "projects")
+	private ProjectTO projectTO;// [TODO] Passar para project TO - Trazer lista
+								// de projetos
 
 	private Cache cache;
 
-	@JsonProperty(value = "sensor")
+	@JsonProperty(value = "sensors")
 	private SensorTO sensorTO;
 
 	public SpaceApiTO(Space space) {
@@ -138,20 +141,20 @@ public class SpaceApiTO {
 		this.issueReportChannels = issueReportChannels;
 	}
 
-	public State getState() {
-		return state;
+	public StateTO getStateTO() {
+		return stateTO;
 	}
 
-	public void setState(State state) {
-		this.state = state;
+	public void setStateTO(StateTO stateTO) {
+		this.stateTO = stateTO;
 	}
 
-	public Project getProject() {
-		return project;
+	public ProjectTO getProjectTO() {
+		return projectTO;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setProjectTO(ProjectTO projectTO) {
+		this.projectTO = projectTO;
 	}
 
 	public Cache getCache() {

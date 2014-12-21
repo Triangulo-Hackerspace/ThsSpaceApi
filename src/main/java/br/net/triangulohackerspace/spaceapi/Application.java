@@ -17,6 +17,7 @@ import br.net.triangulohackerspace.spaceapi.domain.Sensor;
 import br.net.triangulohackerspace.spaceapi.domain.Space;
 import br.net.triangulohackerspace.spaceapi.domain.Spacefed;
 import br.net.triangulohackerspace.spaceapi.domain.State;
+import br.net.triangulohackerspace.spaceapi.domain.StateStatus;
 import br.net.triangulohackerspace.spaceapi.domain.Temperature;
 import br.net.triangulohackerspace.spaceapi.domain.User;
 import br.net.triangulohackerspace.spaceapi.repository.CacheRepository;
@@ -30,6 +31,7 @@ import br.net.triangulohackerspace.spaceapi.repository.SpacefedRepository;
 import br.net.triangulohackerspace.spaceapi.repository.StateRepository;
 import br.net.triangulohackerspace.spaceapi.repository.TemperatureRepository;
 import br.net.triangulohackerspace.spaceapi.repository.UserRepository;
+import br.net.triangulohackerspace.spaceapi.util.DateUtil;
 
 @Configuration
 @EnableAutoConfiguration
@@ -74,35 +76,38 @@ public class Application extends SpringBootServletInitializer {
 
 		UserRepository userRepository = context.getBean(UserRepository.class);
 
-		Space space = new Space(1l, "0.13", "The space name",
+		Space space = new Space("0.13", "The space name",
 				"http://your-space.com/logo.png", "http://example.com");
 		spaceRepository.save(space);
-		
-		Cache cache = new Cache(1l, "m.02", space);
+
+		Cache cache = new Cache("m.02", space);
 		cacheRepository.save(cache);
 
-		Contact contact = new Contact(1l, "e@xample.com", "@example",
+		Contact contact = new Contact("e@xample.com", "@example",
 				"irc://irc.freenode.net/example", "public@lists.example.com",
 				"ZUB4YW1wbGUuY29tCg==", space);
 		contactRepository.save(contact);
 
-		IssueReportChannels issueReportChannels = new IssueReportChannels(1l,
+		IssueReportChannels issueReportChannels = new IssueReportChannels(
 				"issue_mail", space);
 		issueReportChannelsRepository.save(issueReportChannels);
 
-		Location location = new Location(1l, "see the documentation",
-				39.240431, 5.973817, space);
+		Location location = new Location("see the documentation", 39.240431,
+				5.973817, space);
 		locationRepository.save(location);
 
-		Project project = new Project(1l, "example",
-				"http://github.com/example", space);
+		Project project = new Project("example", "http://github.com/example",
+				space);
 		projectRepository.save(project);
+		
+		Project project2 = new Project("example2", "http://github.com/example2",
+				space);
+		projectRepository.save(project2);
 
-		Sensor sensor = new Sensor(1l, "t1", space);
+		Sensor sensor = new Sensor("t1", space);
 		sensorRepository.save(sensor);
 
 		Temperature temperature1 = new Temperature();
-		temperature1.setId(1l);
 		temperature1.setLocation("Roof");
 		temperature1.setUnit("°C");
 		temperature1.setValue("-");
@@ -110,22 +115,27 @@ public class Application extends SpringBootServletInitializer {
 		temperatureRepository.save(temperature1);
 
 		Temperature temperature2 = new Temperature();
-		temperature2.setId(2l);
 		temperature2.setLocation("Lab");
 		temperature2.setUnit("°De");
 		temperature2.setValue("-");
 		temperature2.setSensor(sensor);
 		temperatureRepository.save(temperature2);
 
-		Spacefed spacefed = new Spacefed(1l, false, false, false, space);
+		Spacefed spacefed = new Spacefed(false, false, false, space);
 		spacefedRepository.save(spacefed);
 
-		State state = new State(1l, false, space);
-		stateRepository.save(state);
+		User user = new User("rogerio", "sena");
+		userRepository.save(user);
+		
+		State state1 = new State(true, space, user, DateUtil.getNowDate(),
+				StateStatus.OPEN.getStateStatus());
+		stateRepository.save(state1);
 
-		userRepository.save(new User(1l, "rogerio", "sena"));
+		State state2 = new State(false, space, user, DateUtil.getNowDate(),
+				StateStatus.CLOSE.getStateStatus());
+		stateRepository.save(state2);
 	}
-
+	
 	@Override
 	protected final SpringApplicationBuilder configure(
 			final SpringApplicationBuilder application) {

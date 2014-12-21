@@ -9,10 +9,14 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class Temperature extends AbstractDomain implements Serializable {
+@JsonIgnoreProperties("new")
+public class Temperature extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = -9084396676085892892L;
 
@@ -46,7 +50,6 @@ public class Temperature extends AbstractDomain implements Serializable {
 
 	public Temperature(String value, String unit, String location, Space space,
 			Sensor sensor) {
-		super();
 		this.value = value;
 		this.unit = unit;
 		this.location = location;
@@ -54,6 +57,12 @@ public class Temperature extends AbstractDomain implements Serializable {
 		this.sensor = sensor;
 	}
 
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return super.getId();
+	}
+	
 	/**
 	 * @return the value
 	 */

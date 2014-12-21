@@ -22,27 +22,33 @@ import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsExcep
 @RestController
 public class CacheController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CacheController.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(CacheController.class);
 
-    @Inject
-    private CacheService cacheService;
+	@Inject
+	private CacheService cacheService;
 
-    @RequestMapping(value = "/cache", method = RequestMethod.POST)
-    public Cache createCache(@RequestBody @Valid final Cache cache) {
-        LOGGER.debug("Received request to create the {}", cache);
-        return cacheService.save(cache);
-    }
+	@Inject
+	public CacheController(final CacheService cacheService) {
+		this.cacheService = cacheService;
+	}
+	
+	@RequestMapping(value = "/cache", method = RequestMethod.POST)
+	public Cache createCache(@RequestBody @Valid final Cache cache) {
+		LOGGER.debug("Received request to create the {}", cache);
+		return cacheService.save(cache);
+	}
 
-    @RequestMapping(value = "/cache", method = RequestMethod.GET)
-    public List<Cache> listCaches() {
+	@RequestMapping(value = "/cache", method = RequestMethod.GET)
+	public List<Cache> listCaches() {
 		LOGGER.debug("Received request to list all caches");
-        return cacheService.getList();
-    }
+		return cacheService.getList();
+	}
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleCacheAlreadyExistsException(AlreadyExistsException e) {
-        return e.getMessage();
-    }
+	@ExceptionHandler
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public String handleCacheAlreadyExistsException(AlreadyExistsException e) {
+		return e.getMessage();
+	}
 
 }

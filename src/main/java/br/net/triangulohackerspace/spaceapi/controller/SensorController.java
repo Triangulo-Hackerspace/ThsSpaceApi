@@ -22,27 +22,33 @@ import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsExcep
 @RestController
 public class SensorController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SensorController.class);
-    
-    @Inject
-    private SensorService sensorService;
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(SensorController.class);
 
-    @RequestMapping(value = "/sensor", method = RequestMethod.POST)
-    public Sensor createSensor(@RequestBody @Valid final Sensor sensor) {
-        LOGGER.debug("Received request to create the {}", sensor);
-        return sensorService.save(sensor);
-    }
+	@Inject
+	private SensorService sensorService;
 
-    @RequestMapping(value = "/sensor", method = RequestMethod.GET)
-    public List<Sensor> listSensors() {
+	@Inject
+	public SensorController(final SensorService sensorService) {
+		this.sensorService = sensorService;
+	}
+
+	@RequestMapping(value = "/sensor", method = RequestMethod.POST)
+	public Sensor createSensor(@RequestBody @Valid final Sensor sensor) {
+		LOGGER.debug("Received request to create the {}", sensor);
+		return sensorService.save(sensor);
+	}
+
+	@RequestMapping(value = "/sensor", method = RequestMethod.GET)
+	public List<Sensor> listSensors() {
 		LOGGER.debug("Received request to list all sensors");
-        return sensorService.getList();
-    }
+		return sensorService.getList();
+	}
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleSensorAlreadyExistsException(AlreadyExistsException e) {
-        return e.getMessage();
-    }
+	@ExceptionHandler
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public String handleSensorAlreadyExistsException(AlreadyExistsException e) {
+		return e.getMessage();
+	}
 
 }

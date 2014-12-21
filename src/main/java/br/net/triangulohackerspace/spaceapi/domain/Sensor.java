@@ -9,10 +9,14 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class Sensor extends AbstractDomain implements Serializable {
+@JsonIgnoreProperties("new")
+public class Sensor extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = -5439912294977186010L;
 
@@ -31,12 +35,17 @@ public class Sensor extends AbstractDomain implements Serializable {
 		super();
 	}
 
-	public Sensor(Long id, String name, Space space) {
-		super(id);
+	public Sensor(String name, Space space) {
 		this.name = name;
 		this.space = space;
 	}
 
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return super.getId();
+	}
+	
 	/**
 	 * @return the name
 	 */

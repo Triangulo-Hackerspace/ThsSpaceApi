@@ -27,6 +27,11 @@ public class ProjectController {
 
 	@Inject
 	private ProjectService projectService;
+	
+	@Inject
+	public ProjectController(final ProjectService projectService) {
+		this.projectService = projectService;
+	}
 
 	@RequestMapping(value = "/project", method = RequestMethod.POST)
 	public Project createProject(@RequestBody @Valid final Project project) {

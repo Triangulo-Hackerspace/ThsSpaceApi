@@ -29,6 +29,11 @@ public class SpaceController {
    
     @Inject
     private SpaceService spaceService;
+    
+    @Inject
+	public SpaceController(final SpaceService spaceService) {
+		this.spaceService = spaceService;
+	}
 
     @RequestMapping(value = "/space", method = RequestMethod.POST)
     public Space createSpace(@RequestBody @Valid final Space space) {

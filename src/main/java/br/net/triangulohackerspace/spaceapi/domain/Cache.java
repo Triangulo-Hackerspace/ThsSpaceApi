@@ -9,10 +9,14 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class Cache extends AbstractDomain implements Serializable {
+@JsonIgnoreProperties("new")
+public class Cache extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,19 +33,20 @@ public class Cache extends AbstractDomain implements Serializable {
 	public Cache() {
 		super();
 	}
-
-	public Cache(Long id) {
-		super(id);
-	}
 	
 	/**
 	 * @param schedule
 	 * @param space
 	 */
-	public Cache(Long id, String schedule, Space space) {
-		super(id);
+	public Cache(String schedule, Space space) {
 		this.schedule = schedule;
 		this.space = space;
+	}
+	
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return super.getId();
 	}
 
 	public String getSchedule() {

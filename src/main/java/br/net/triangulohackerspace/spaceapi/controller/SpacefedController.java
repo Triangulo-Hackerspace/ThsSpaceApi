@@ -27,6 +27,11 @@ public class SpacefedController {
     
     @Inject
     private SpacefedService spacefedService;
+    
+    @Inject
+	public SpacefedController(final SpacefedService spacefedService) {
+		this.spacefedService = spacefedService;
+	}
 
     @RequestMapping(value = "/spacefed", method = RequestMethod.POST)
     public Spacefed createSpacefed(@RequestBody @Valid final Spacefed spacefed) {

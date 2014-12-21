@@ -22,27 +22,33 @@ import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsExcep
 @RestController
 public class ContactController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContactController.class);
-    
-    @Inject
-    private ContactService contactService;
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(ContactController.class);
 
-    @RequestMapping(value = "/contact", method = RequestMethod.POST)
-    public Contact createContact(@RequestBody @Valid final Contact contact) {
-        LOGGER.debug("Received request to create the {}", contact);
-        return contactService.save(contact);
-    }
+	@Inject
+	private ContactService contactService;
 
-    @RequestMapping(value = "/contact", method = RequestMethod.GET)
-    public List<Contact> listContacts() {
+	@Inject
+	public ContactController(final ContactService contactService) {
+		this.contactService = contactService;
+	}
+
+	@RequestMapping(value = "/contact", method = RequestMethod.POST)
+	public Contact createContact(@RequestBody @Valid final Contact contact) {
+		LOGGER.debug("Received request to create the {}", contact);
+		return contactService.save(contact);
+	}
+
+	@RequestMapping(value = "/contact", method = RequestMethod.GET)
+	public List<Contact> listContacts() {
 		LOGGER.debug("Received request to list all contacts");
-        return contactService.getList();
-    }
+		return contactService.getList();
+	}
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleContactAlreadyExistsException(AlreadyExistsException e) {
-        return e.getMessage();
-    }
+	@ExceptionHandler
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public String handleContactAlreadyExistsException(AlreadyExistsException e) {
+		return e.getMessage();
+	}
 
 }

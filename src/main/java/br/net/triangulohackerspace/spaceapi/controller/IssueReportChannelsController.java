@@ -26,6 +26,11 @@ public class IssueReportChannelsController {
     
     @Inject
     private IssueReportChannelsService issueService;
+    
+    @Inject
+	public IssueReportChannelsController(final IssueReportChannelsService issueService) {
+		this.issueService = issueService;
+	}
 
     @RequestMapping(value = "/issueReportChannels", method = RequestMethod.POST)
     public IssueReportChannels createIssueReportChannels(@RequestBody @Valid final IssueReportChannels issueReportChannels) {

@@ -26,6 +26,11 @@ public class TemperatureController {
     
     @Inject
     private TemperatureService temperatureService;
+    
+    @Inject
+	public TemperatureController(final TemperatureService temperatureService) {
+		this.temperatureService = temperatureService;
+	}
 
     @RequestMapping(value = "/temperature", method = RequestMethod.POST)
     public Temperature createTemperature(@RequestBody @Valid final Temperature temperature) {

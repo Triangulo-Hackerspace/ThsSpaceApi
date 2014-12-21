@@ -9,10 +9,14 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class Location extends AbstractDomain implements Serializable {
+@JsonIgnoreProperties("new")
+public class Location extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 7993128997393503166L;
 
@@ -38,16 +42,17 @@ public class Location extends AbstractDomain implements Serializable {
 		super();
 	}
 
-	public Location(Long id) {
-		super(id);
-	}
-
-	public Location(Long id, String address, Double lat, Double log, Space space) {
-		super(id);
+	public Location(String address, Double lat, Double log, Space space) {
 		this.address = address;
 		this.lat = lat;
 		this.log = log;
 		this.space = space;
+	}
+	
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return super.getId();
 	}
 
 	/**

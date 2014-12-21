@@ -9,15 +9,12 @@ import static org.mockito.Mockito.when;
 
 import java.util.Collection;
 
-import javax.inject.Inject;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.net.triangulohackerspace.spaceapi.controller.UserController;
 import br.net.triangulohackerspace.spaceapi.domain.User;
 import br.net.triangulohackerspace.spaceapi.service.UserService;
 import br.net.triangulohackerspace.spaceapi.util.UserUtil;
@@ -28,13 +25,13 @@ public class UserControllerTest {
     @Mock
     private UserService userService;
 
-    @Inject
     private UserController userController;
 
-    @Before
-    public void setUp() throws Exception {
-    }
-
+	@Before
+	public void setUp() throws Exception {
+		userController = new UserController(userService);
+	}
+	
     @Test
     public void shouldCreateUser() throws Exception {
         final User savedUser = stubServiceToReturnStoredUser();

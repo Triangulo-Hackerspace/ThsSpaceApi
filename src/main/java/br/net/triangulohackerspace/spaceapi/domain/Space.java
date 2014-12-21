@@ -7,8 +7,14 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-public class Space extends AbstractDomain implements Serializable {
+@JsonIgnoreProperties("new")
+public class Space extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 8883842678258104959L;
 
@@ -32,57 +38,25 @@ public class Space extends AbstractDomain implements Serializable {
 	@Column(name = "url", nullable = false)
 	private String url;
 
-/*	@OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Location> location = new LinkedList<Location>();
-
-	@OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Spacefed> spacefeds = new LinkedList<Spacefed>();
-
-	@OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Contact> contacts = new LinkedList<Contact>();
-
-	@OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<IssueReportChannels> issueReportChannels = new LinkedList<IssueReportChannels>();
-
-	@OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<State> states = new LinkedList<State>();
-
-	@OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Project> projects = new LinkedList<Project>();
-
-	@OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Cache> caches = new LinkedList<Cache>();
-
-	@OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Sensor> sensors = new LinkedList<Sensor>();*/
-
 	public Space() {
 		super();
 	}
 
-	public Space(Long id) {
-		super(id);
-	}
-
 	// [TODO] passar para build
-	public Space(Long id, String apiVersion, String name, String logo, String url) {
-		super(id);
+	public Space(String apiVersion, String name, String logo,
+			String url) {
 		this.apiVersion = apiVersion;
 		this.name = name;
 		this.logo = logo;
 		this.url = url;
-
 	}
 
-	
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return super.getId();
+	}
+
 	public String getApiVersion() {
 		return apiVersion;
 	}
@@ -115,7 +89,9 @@ public class Space extends AbstractDomain implements Serializable {
 		this.url = url;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -130,7 +106,9 @@ public class Space extends AbstractDomain implements Serializable {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -165,7 +143,9 @@ public class Space extends AbstractDomain implements Serializable {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

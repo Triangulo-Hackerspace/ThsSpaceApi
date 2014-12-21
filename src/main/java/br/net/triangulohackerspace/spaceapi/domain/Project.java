@@ -9,10 +9,14 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class Project extends AbstractDomain implements Serializable {
+@JsonIgnoreProperties("new")
+public class Project extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 8475684755570732926L;
 
@@ -35,15 +39,16 @@ public class Project extends AbstractDomain implements Serializable {
 		super();
 	}
 
-	public Project(Long id) {
-		super(id);
-	}
-
-	public Project(Long id, String name, String git, Space space) {
-		super(id);
+	public Project(String name, String git, Space space) {
 		this.name = name;
 		this.git = git;
 		this.space = space;
+	}
+	
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return super.getId();
 	}
 
 	/**
