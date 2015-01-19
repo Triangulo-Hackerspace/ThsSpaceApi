@@ -1,0 +1,22 @@
+<!doctype html>
+<html ng-app>
+	<head>
+		<title>Hello AngularJS</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    	<script src="hello.js"></script>
+	</head>
+
+	<body ng-controller="Hello">
+		<div ng-repeat="state in states">
+			<p>The ID is {{state.id}}</p>
+			<p>The content is {{state.open}}</p>
+			
+			<p>The data is {{state.date}}</p>
+		</div>
+	
+		<div ng-show="state.open"><img src="open.jpg" width="50" height="50" /></div>
+   	    <div ng-show="state.open != true"><img src="close.jpg"  width="50" height="50" /></div>
+		now: {{state.open}}
+		
+	</body>
+</html>

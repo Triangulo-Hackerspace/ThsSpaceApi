@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -105,4 +106,28 @@ public class StateServiceImpl implements StateService {
 		LOGGER.debug("Retrieving the list of all spaces");
 		return repository.findAll();
 	}
+
+	@Override
+	public StateTO findState() {
+		StateTO stateTO = null;
+		
+		State result = repository.findAll(sortByDateAsc()).get(0);
+		
+		System.out.println("" + result.getOpen());
+		System.out.println("" + result.getDate());
+		stateTO = new StateTO(result);
+		
+		stateTO.setOpen(result.getOpen());
+		stateTO.setDate(result.getDate());
+				
+		return stateTO;
+	}
+	
+	  /**
+     * Returns a Sort object which sorts persons in ascending order by using the last name.
+     * @return
+     */
+    private Sort sortByDateAsc() {
+        return new Sort(Sort.Direction.ASC, "date");
+    }
 }

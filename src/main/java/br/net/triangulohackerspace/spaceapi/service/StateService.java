@@ -10,4 +10,6 @@ public interface StateService extends BusinessService<State, Long> {
 	State saveByUser(State state, Long userId, String entry);
 	
 	List<StateTO> getStateList();
+	
+	StateTO findState();
 }

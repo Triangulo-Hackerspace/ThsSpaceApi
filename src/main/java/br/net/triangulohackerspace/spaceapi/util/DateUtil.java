@@ -11,5 +11,12 @@ public class DateUtil {
 		DateFormat df = new SimpleDateFormat(expectedPattern);
 		return df.format(new Date());
 	}
-
+	
+	public static Date getAtualDate() {
+		return new Date();
+	}
+	
+	public static Date getPlusDateByDay(int days) {
+		return new Date(new Date().getTime()+((1000*24*60*60)*days));  
+	}
 }

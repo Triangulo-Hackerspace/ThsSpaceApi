@@ -1,6 +1,7 @@
 package br.net.triangulohackerspace.spaceapi.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +32,7 @@ public class State extends AbstractPersistable<Long> implements Serializable {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	private String date;
+	private Date date;
 
 	private String stateStatus;
 
@@ -39,7 +40,7 @@ public class State extends AbstractPersistable<Long> implements Serializable {
 		super();
 	}
 
-	public State(Boolean open, Space space, User user, String date,
+	public State(Boolean open, Space space, User user, Date date,
 			String stateStatus) {
 		this.open = open;
 		this.space = space;
@@ -78,11 +79,11 @@ public class State extends AbstractPersistable<Long> implements Serializable {
 		this.user = user;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

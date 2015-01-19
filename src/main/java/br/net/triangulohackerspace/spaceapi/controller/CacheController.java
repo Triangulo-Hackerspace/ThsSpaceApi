@@ -27,6 +27,9 @@ public class CacheController {
 
 	@Inject
 	private CacheService cacheService;
+	
+	//@Inject
+	//private SpaceServiceFactory spaceServiceFactory;
 
 	@Inject
 	public CacheController(final CacheService cacheService) {
@@ -36,7 +39,8 @@ public class CacheController {
 	@RequestMapping(value = "/cache", method = RequestMethod.POST)
 	public Cache createCache(@RequestBody @Valid final Cache cache) {
 		LOGGER.debug("Received request to create the {}", cache);
-		return cacheService.save(cache);
+	//	return (Cache) spaceServiceFactory.getService("cache").save(cache);
+		return null;
 	}
 
 	@RequestMapping(value = "/cache", method = RequestMethod.GET)

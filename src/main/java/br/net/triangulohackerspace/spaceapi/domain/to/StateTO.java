@@ -1,6 +1,7 @@
 package br.net.triangulohackerspace.spaceapi.domain.to;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import br.net.triangulohackerspace.spaceapi.domain.Space;
 import br.net.triangulohackerspace.spaceapi.domain.State;
@@ -14,10 +15,6 @@ public class StateTO implements Serializable {
 
 	@JsonIgnore
 	private State state;
-	
-	public StateTO() {
-		super();
-	}
 
 	public StateTO(State state) {
 		super();
@@ -54,11 +51,11 @@ public class StateTO implements Serializable {
 	}
 
 	@JsonIgnore
-	public String getDate() {
+	public Date getDate() {
 		return state.getDate();
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.state.setDate(date);
 	}
 

@@ -26,7 +26,7 @@ public class StateUtil {
 	}
 
 	public static State getState() {
-		return new State(STATUS, SpaceUtil.getSpace(), UserUtil.getUser(), DateUtil.getNowDate(),
+		return new State(STATUS, SpaceUtil.getSpace(), UserUtil.getUser(), DateUtil.getAtualDate(),
 				StateStatus.OPEN.getStateStatus());
 	}
 }

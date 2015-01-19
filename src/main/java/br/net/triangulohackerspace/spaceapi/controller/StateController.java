@@ -59,6 +59,13 @@ public class StateController {
         return stateService.getList();
     }
 
+    @RequestMapping(value = "/state/now", method = RequestMethod.GET)
+    public StateTO getStateNearNow() {
+		LOGGER.debug("Received request to list all states");
+        return stateService.findState();
+    }
+
+    
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleStateAlreadyExistsException(AlreadyExistsException e) {

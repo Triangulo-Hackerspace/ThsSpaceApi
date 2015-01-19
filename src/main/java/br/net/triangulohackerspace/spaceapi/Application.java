@@ -1,5 +1,7 @@
 package br.net.triangulohackerspace.spaceapi;
 
+import static br.net.triangulohackerspace.spaceapi.util.DateUtil.getAtualDate;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -31,7 +33,6 @@ import br.net.triangulohackerspace.spaceapi.repository.SpacefedRepository;
 import br.net.triangulohackerspace.spaceapi.repository.StateRepository;
 import br.net.triangulohackerspace.spaceapi.repository.TemperatureRepository;
 import br.net.triangulohackerspace.spaceapi.repository.UserRepository;
-import br.net.triangulohackerspace.spaceapi.util.DateUtil;
 
 @Configuration
 @EnableAutoConfiguration
@@ -126,13 +127,13 @@ public class Application extends SpringBootServletInitializer {
 
 		User user = new User("rogerio", "sena");
 		userRepository.save(user);
-		
-		State state1 = new State(true, space, user, DateUtil.getNowDate(),
-				StateStatus.OPEN.getStateStatus());
-		stateRepository.save(state1);
-
-		State state2 = new State(false, space, user, DateUtil.getNowDate(),
+	
+	/*	State state1 = new State(true, space, user, getPlusDateByDay(-2),
 				StateStatus.CLOSE.getStateStatus());
+		stateRepository.save(state1);*/
+
+		State state2 = new State(true, space, user, getAtualDate(),
+				StateStatus.OPEN.getStateStatus());
 		stateRepository.save(state2);
 	}
 	
