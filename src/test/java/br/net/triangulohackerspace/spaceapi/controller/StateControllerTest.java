@@ -31,7 +31,7 @@ public class StateControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		stateController = new StateController(stateService);
+		//stateController = new StateController(stateService);
 	}
 
 	@Test

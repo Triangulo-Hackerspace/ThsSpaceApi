@@ -27,6 +27,7 @@ public class User extends AbstractPersistable<Long> implements Serializable {
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "password", nullable = false)
+	@JsonIgnore
 	private String password;
 
 	public User() {

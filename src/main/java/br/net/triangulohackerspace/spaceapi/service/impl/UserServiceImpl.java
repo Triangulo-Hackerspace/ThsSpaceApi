@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 import br.net.triangulohackerspace.spaceapi.domain.User;
 import br.net.triangulohackerspace.spaceapi.repository.UserRepository;
+import br.net.triangulohackerspace.spaceapi.service.Services;
 import br.net.triangulohackerspace.spaceapi.service.UserService;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
@@ -47,5 +48,10 @@ public class UserServiceImpl implements UserService {
         LOGGER.debug("Retrieving the list of all users");
         return repository.findAll();
     }
+
+	@Override
+	public Services appliesTo() {
+		return Services.User;
+	}
 
 }

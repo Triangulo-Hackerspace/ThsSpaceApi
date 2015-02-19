@@ -20,6 +20,7 @@ import br.net.triangulohackerspace.spaceapi.domain.User;
 import br.net.triangulohackerspace.spaceapi.domain.to.StateTO;
 import br.net.triangulohackerspace.spaceapi.repository.StateRepository;
 import br.net.triangulohackerspace.spaceapi.repository.UserRepository;
+import br.net.triangulohackerspace.spaceapi.service.Services;
 import br.net.triangulohackerspace.spaceapi.service.StateService;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
@@ -50,9 +51,9 @@ public class StateServiceImpl implements StateService {
 		state.setUser(user);
 
 		if (entry.equals("OPEN")) { // [TODO] Melhorar buscar por enum
-			state.setStateStatus(StateStatus.OPEN.getStateStatus());
+			state.setStatus(StateStatus.OPEN.getStatus());
 		} else if (entry.equals("CLOSE")) {
-			state.setStateStatus(StateStatus.CLOSE.getStateStatus());
+			state.setStatus(StateStatus.CLOSE.getStatus());
 		}
 
 		LOGGER.debug("Creating {}", state);
@@ -113,11 +114,11 @@ public class StateServiceImpl implements StateService {
 		
 		State result = repository.findAll(sortByDateAsc()).get(0);
 		
-		System.out.println("" + result.getOpen());
+		System.out.println("" + result.getStatus());
 		System.out.println("" + result.getDate());
 		stateTO = new StateTO(result);
 		
-		stateTO.setOpen(result.getOpen());
+		stateTO.setOpen(result.getStatus());
 		stateTO.setDate(result.getDate());
 				
 		return stateTO;
@@ -130,4 +131,9 @@ public class StateServiceImpl implements StateService {
     private Sort sortByDateAsc() {
         return new Sort(Sort.Direction.ASC, "date");
     }
+
+	@Override
+	public Services appliesTo() {
+		return Services.State;
+	}
 }

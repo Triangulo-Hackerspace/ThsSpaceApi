@@ -33,7 +33,7 @@ public class SpaceControllerTest {
 
     @Before
     public void setUp() throws Exception {
-    	spaceController = new SpaceController(spaceService);
+    	//spaceController = new SpaceController(spaceService);
     }
 
     @Test

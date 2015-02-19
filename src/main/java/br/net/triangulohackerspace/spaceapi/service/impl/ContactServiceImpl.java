@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import br.net.triangulohackerspace.spaceapi.domain.Contact;
 import br.net.triangulohackerspace.spaceapi.repository.ContactRepository;
 import br.net.triangulohackerspace.spaceapi.service.ContactService;
+import br.net.triangulohackerspace.spaceapi.service.Services;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
 @Service
@@ -48,4 +49,8 @@ public class ContactServiceImpl implements ContactService {
         return repository.findAll();
     }
 
+	@Override
+	public Services appliesTo() {
+		return Services.Contact;
+	}
 }

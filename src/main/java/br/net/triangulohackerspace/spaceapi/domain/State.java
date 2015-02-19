@@ -21,46 +21,34 @@ public class State extends AbstractPersistable<Long> implements Serializable {
 	private static final long serialVersionUID = 5470957854048224005L;
 
 	@NotNull
-	@Column(name = "open", nullable = false)
-	private Boolean open;
+	@Column(name = "status", nullable = false)
+	private Boolean status;
 
 	@ManyToOne
 	@JoinColumn(name = "space_id")
 	private Space space;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 
 	private Date date;
 
-	private String stateStatus;
-
 	public State() {
 		super();
 	}
 
-	public State(Boolean open, Space space, User user, Date date,
-			String stateStatus) {
-		this.open = open;
+	public State(Boolean status, Space space, User user, Date date) {
+		this.status = status;
 		this.space = space;
 		this.user = user;
 		this.date = date;
-		this.stateStatus = stateStatus;
 	}
 
 	@Override
 	@JsonIgnore
 	public Long getId() {
 		return super.getId();
-	}
-	
-	public Boolean getOpen() {
-		return open;
-	}
-
-	public void setOpen(Boolean open) {
-		this.open = open;
 	}
 
 	public Space getSpace() {
@@ -87,12 +75,12 @@ public class State extends AbstractPersistable<Long> implements Serializable {
 		this.date = date;
 	}
 
-	public String getStateStatus() {
-		return stateStatus;
+	public Boolean getStatus() {
+		return status;
 	}
 
-	public void setStateStatus(String stateStatus) {
-		this.stateStatus = stateStatus;
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 	@Override
@@ -100,10 +88,8 @@ public class State extends AbstractPersistable<Long> implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((open == null) ? 0 : open.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((space == null) ? 0 : space.hashCode());
-		result = prime * result
-				+ ((stateStatus == null) ? 0 : stateStatus.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -122,20 +108,10 @@ public class State extends AbstractPersistable<Long> implements Serializable {
 				return false;
 		} else if (!date.equals(other.date))
 			return false;
-		if (open == null) {
-			if (other.open != null)
-				return false;
-		} else if (!open.equals(other.open))
-			return false;
 		if (space == null) {
 			if (other.space != null)
 				return false;
 		} else if (!space.equals(other.space))
-			return false;
-		if (stateStatus == null) {
-			if (other.stateStatus != null)
-				return false;
-		} else if (!stateStatus.equals(other.stateStatus))
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -147,8 +123,8 @@ public class State extends AbstractPersistable<Long> implements Serializable {
 
 	@Override
 	public String toString() {
-		return "State [open=" + open + ", space=" + space + ", user=" + user
-				+ ", date=" + date + ", stateStatus=" + stateStatus + "]";
+		return "State [status=" + status + ", space=" + space + ", user="
+				+ user + ", date=" + date + "]";
 	}
 
 }

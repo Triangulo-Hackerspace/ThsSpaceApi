@@ -33,7 +33,7 @@ public class TemperatureControllerTest {
 
     @Before
     public void setUp() throws Exception {
-    	temperatureController = new TemperatureController(temperatureService);
+    	//temperatureController = new TemperatureController(temperatureService);
     }
 
     @Test

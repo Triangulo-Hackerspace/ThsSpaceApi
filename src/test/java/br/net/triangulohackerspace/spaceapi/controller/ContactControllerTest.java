@@ -33,7 +33,7 @@ public class ContactControllerTest {
 
     @Before
     public void setUp() throws Exception {
-    	contactController = new ContactController(contactService);
+    	//contactController = new ContactController(contactService);
     }
 
     @Test

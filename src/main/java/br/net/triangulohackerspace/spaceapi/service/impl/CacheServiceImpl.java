@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import br.net.triangulohackerspace.spaceapi.domain.Cache;
 import br.net.triangulohackerspace.spaceapi.repository.CacheRepository;
 import br.net.triangulohackerspace.spaceapi.service.CacheService;
+import br.net.triangulohackerspace.spaceapi.service.Services;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
 @Service
@@ -47,5 +48,10 @@ public class CacheServiceImpl implements CacheService {
 		LOGGER.debug("Retrieving the list of all caches");
         return repository.findAll();
     }
+
+	@Override
+	public Services appliesTo() {
+		return Services.Cache;
+	}
 
 }

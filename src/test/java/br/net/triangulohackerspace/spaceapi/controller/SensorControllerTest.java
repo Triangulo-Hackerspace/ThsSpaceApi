@@ -33,7 +33,7 @@ public class SensorControllerTest {
 
     @Before
     public void setUp() throws Exception {
-    	sensorController = new SensorController(sensorService);
+    	//sensorController = new SensorController(sensorService);
     }
 
     @Test

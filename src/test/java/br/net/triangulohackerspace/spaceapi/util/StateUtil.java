@@ -8,8 +8,6 @@ import br.net.triangulohackerspace.spaceapi.domain.StateStatus;
 
 public class StateUtil {
 
-	private static final Boolean STATUS = true;
-	
 	private StateUtil() {
 	}
 
@@ -26,7 +24,6 @@ public class StateUtil {
 	}
 
 	public static State getState() {
-		return new State(STATUS, SpaceUtil.getSpace(), UserUtil.getUser(), DateUtil.getAtualDate(),
-				StateStatus.OPEN.getStateStatus());
+		return new State(StateStatus.OPEN.getStatus(), SpaceUtil.getSpace(), UserUtil.getUser(), DateUtil.getAtualDate());
 	}
 }

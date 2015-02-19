@@ -1,20 +1,20 @@
 package br.net.triangulohackerspace.spaceapi.domain;
 
 public enum StateStatus {
-	OPEN("Open"), CLOSE("Close");
+	OPEN(true), CLOSE(false);
 
-	private String stateStatus;
+	private Boolean status;
 
-	private StateStatus(String stateStatus) {
-		this.stateStatus = stateStatus;
+	private StateStatus(Boolean status) {
+		this.status = status;
 	}
 
-	public String getStateStatus() {
-		return stateStatus;
+	public Boolean getStatus() {
+		return status;
 	}
 
-	public void setStateStatus(String stateStatus) {
-		this.stateStatus = stateStatus;
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 }

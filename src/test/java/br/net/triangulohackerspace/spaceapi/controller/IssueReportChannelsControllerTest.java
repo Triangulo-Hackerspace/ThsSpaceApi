@@ -33,7 +33,7 @@ public class IssueReportChannelsControllerTest {
 
     @Before
     public void setUp() throws Exception {
-    	issueReportChannelsController = new IssueReportChannelsController(issueService);
+    	//issueReportChannelsController = new IssueReportChannelsController(issueService);
     }
 
     @Test

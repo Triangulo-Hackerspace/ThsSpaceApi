@@ -132,8 +132,7 @@ public class Application extends SpringBootServletInitializer {
 				StateStatus.CLOSE.getStateStatus());
 		stateRepository.save(state1);*/
 
-		State state2 = new State(true, space, user, getAtualDate(),
-				StateStatus.OPEN.getStateStatus());
+		State state2 = new State(StateStatus.OPEN.getStatus(), space, user, getAtualDate());
 		stateRepository.save(state2);
 	}
 	

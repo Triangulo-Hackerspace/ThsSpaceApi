@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import br.net.triangulohackerspace.spaceapi.domain.IssueReportChannels;
 import br.net.triangulohackerspace.spaceapi.repository.IssueReportChannelsRepository;
 import br.net.triangulohackerspace.spaceapi.service.IssueReportChannelsService;
+import br.net.triangulohackerspace.spaceapi.service.Services;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
 @Service
@@ -47,5 +48,10 @@ public class IssueReportChannelsServiceImpl implements IssueReportChannelsServic
 		LOGGER.debug("Retrieving the list of all issueReportChannelss");
         return repository.findAll();
     }
+
+	@Override
+	public Services appliesTo() {
+		return Services.IssueReportChannels;
+	}
 
 }

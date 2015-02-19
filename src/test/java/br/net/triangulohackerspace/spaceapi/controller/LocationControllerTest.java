@@ -32,7 +32,7 @@ public class LocationControllerTest {
 
     @Before
     public void setUp() throws Exception {
-    	locationController = new LocationController(locationService);
+    	//locationController = new LocationController(locationService);
     }
 
     @Test

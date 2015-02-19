@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 import br.net.triangulohackerspace.spaceapi.domain.Project;
 import br.net.triangulohackerspace.spaceapi.repository.ProjectRepository;
+import br.net.triangulohackerspace.spaceapi.service.Services;
 import br.net.triangulohackerspace.spaceapi.service.ProjectService;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
@@ -47,5 +48,10 @@ public class ProjectServiceImpl implements ProjectService {
 		LOGGER.debug("Retrieving the list of all projects");
         return repository.findAll();
     }
+
+	@Override
+	public Services appliesTo() {
+		return Services.Project;
+	}
 
 }

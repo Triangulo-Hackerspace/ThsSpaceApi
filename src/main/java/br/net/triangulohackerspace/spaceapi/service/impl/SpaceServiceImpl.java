@@ -38,6 +38,7 @@ import br.net.triangulohackerspace.spaceapi.repository.SpaceRepository;
 import br.net.triangulohackerspace.spaceapi.repository.SpacefedRepository;
 import br.net.triangulohackerspace.spaceapi.repository.StateRepository;
 import br.net.triangulohackerspace.spaceapi.repository.TemperatureRepository;
+import br.net.triangulohackerspace.spaceapi.service.Services;
 import br.net.triangulohackerspace.spaceapi.service.SpaceService;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
@@ -172,6 +173,11 @@ public class SpaceServiceImpl implements SpaceService {
 	@Override
 	public Space findById(Long id) {
 		return repository.getOne(id);
+	}
+
+	@Override
+	public Services appliesTo() {
+		return Services.Space;
 	}
 
 }

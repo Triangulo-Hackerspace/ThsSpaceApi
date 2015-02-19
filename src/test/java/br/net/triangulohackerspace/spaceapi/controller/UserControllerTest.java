@@ -29,7 +29,7 @@ public class UserControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		userController = new UserController(userService);
+		//userController = new UserController(userService);
 	}
 	
     @Test

@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 import br.net.triangulohackerspace.spaceapi.domain.Spacefed;
 import br.net.triangulohackerspace.spaceapi.repository.SpacefedRepository;
+import br.net.triangulohackerspace.spaceapi.service.Services;
 import br.net.triangulohackerspace.spaceapi.service.SpacefedService;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
@@ -47,5 +48,10 @@ public class SpacefedServiceImpl implements SpacefedService {
 		LOGGER.debug("Retrieving the list of all spacefeds");
         return repository.findAll();
     }
+
+	@Override
+	public Services appliesTo() {
+		return Services.Spacefed;
+	}
 
 }

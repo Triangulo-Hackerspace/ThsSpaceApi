@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 import br.net.triangulohackerspace.spaceapi.domain.Sensor;
 import br.net.triangulohackerspace.spaceapi.repository.SensorRepository;
+import br.net.triangulohackerspace.spaceapi.service.Services;
 import br.net.triangulohackerspace.spaceapi.service.SensorService;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
@@ -47,5 +48,10 @@ public class SensorServiceImpl implements SensorService {
 		LOGGER.debug("Retrieving the list of all sensors");
         return repository.findAll();
     }
+
+	@Override
+	public Services appliesTo() {
+		return Services.Sensor;
+	}
 
 }

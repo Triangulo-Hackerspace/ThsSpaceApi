@@ -21,21 +21,25 @@ public class Space extends AbstractPersistable<Long> implements Serializable {
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "api_version", nullable = false)
+	@JsonIgnore
 	private String apiVersion;
 
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "name", nullable = false)
+	@JsonIgnore
 	private String name;
 
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "logo", nullable = false)
+	@JsonIgnore
 	private String logo;
 
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "url", nullable = false)
+	@JsonIgnore
 	private String url;
 
 	public Space() {
@@ -52,7 +56,6 @@ public class Space extends AbstractPersistable<Long> implements Serializable {
 	}
 
 	@Override
-	@JsonIgnore
 	public Long getId() {
 		return super.getId();
 	}

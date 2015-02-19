@@ -32,7 +32,7 @@ public class ProjectControllerTest {
 
     @Before
     public void setUp() throws Exception {
-    	projectController = new ProjectController(projectService);
+    	//projectController = new ProjectController(projectService);
     }
 
     @Test

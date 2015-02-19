@@ -24,12 +24,13 @@ public class CacheControllerTest {
 
     @Mock
     private CacheService cacheService;
-
+    
+    @Mock
     private CacheController cacheController;
 
     @Before
     public void setUp() throws Exception {
-    	cacheController = new CacheController(cacheService);
+    	cacheController = new CacheController();
     }
 
     @Test

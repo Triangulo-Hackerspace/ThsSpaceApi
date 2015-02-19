@@ -25,11 +25,11 @@ public class StateTO implements Serializable {
 	}
 
 	public Boolean getOpen() {
-		return state.getOpen();
+		return state.getStatus();
 	}
 
 	public void setOpen(Boolean open) {
-		this.state.setOpen(open);
+		this.state.setStatus(open);
 	}
 
 	@JsonIgnore
@@ -58,14 +58,4 @@ public class StateTO implements Serializable {
 	public void setDate(Date date) {
 		this.state.setDate(date);
 	}
-
-	@JsonIgnore
-	public String getStateStatus() {
-		return state.getStateStatus();
-	}
-
-	public void setStateStatus(String stateStatus) {
-		this.state.setStateStatus(stateStatus);
-	}
-
 }

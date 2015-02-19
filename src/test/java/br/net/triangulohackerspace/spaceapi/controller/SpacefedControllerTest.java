@@ -32,7 +32,7 @@ public class SpacefedControllerTest {
 
     @Before
     public void setUp() throws Exception {
-    	spacefedController = new SpacefedController(spacefedService);
+    	//spacefedController = new SpacefedController(spacefedService);
     }
 
     @Test

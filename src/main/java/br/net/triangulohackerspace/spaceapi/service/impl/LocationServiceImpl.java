@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 import br.net.triangulohackerspace.spaceapi.domain.Location;
 import br.net.triangulohackerspace.spaceapi.repository.LocationRepository;
+import br.net.triangulohackerspace.spaceapi.service.Services;
 import br.net.triangulohackerspace.spaceapi.service.LocationService;
 import br.net.triangulohackerspace.spaceapi.service.exception.AlreadyExistsException;
 
@@ -47,5 +48,10 @@ public class LocationServiceImpl implements LocationService {
 		LOGGER.debug("Retrieving the list of all locations");
         return repository.findAll();
     }
+
+	@Override
+	public Services appliesTo() {
+		return Services.Location;
+	}
 
 }
